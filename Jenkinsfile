@@ -1,15 +1,13 @@
 node {
-  stage('Checkout') {
-    checkout scm
-  }
+  checkout scm
 
-  stage('Install Node') {
-    sh 'apt-get update'
-    sh 'apt-get install -y nodejs'
-  }
+  docker.image('node:16-buster-slim').withRun('-p 3000:3000') { ->
+    stage('build') {
+      sh 'npm install'
+    }
 
-  stage('Build and Test') {
-    sh 'npm install'
-    sh 'npm test'
+    stage('test') {
+      sh 'npm test'
+    }
   }
 }

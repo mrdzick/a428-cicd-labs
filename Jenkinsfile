@@ -1,13 +1,21 @@
-node {
-  checkout scm
-
-  docker.image('node:16-buster-slim').withRun('-p 3000:3000') { ->
-    stage('build') {
-      sh 'npm install'
+pipeline {
+    agent {
+        docker {
+          image 'node:16-buster-slim' 
+          args '-p 3000:3000' 
+        }
     }
+    stages {
+        stage('Build') { 
+          steps {
+              sh 'npm install' 
+          }
+        }
 
-    stage('test') {
-      sh 'npm test'
+        stage('Test') {
+          steps {
+            sh 'npm run test'
+          }
+        }
     }
-  }
 }

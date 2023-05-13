@@ -4,8 +4,8 @@ node {
   }
 
   stage('Install Node') {
-    sh 'sudo apt-get update'
-    sh 'sudo apt-get install -y nodejs'
+    sh 'apt-get update'
+    sh 'apt-get install -y nodejs'
   }
 
   stage('Build and Test') {
